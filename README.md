@@ -129,6 +129,139 @@ import "@testing-library/jest-dom";
 
 run npm test, your tests should pass and confirm that React-testing-Library is setup correctly
 
+#### Step 3: Eslint setup
+
+```
+npx eslint --init
+```
+
+update your eslint.js with the last 2 configs
+
+```
+ "extends": [
+        ...
+         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "next",
+    "next/core-web-vitals",
+    ],
+```
+
+remove the env and plugin objects
+
+update the parserOptions by adding the below:
+
+```
+  parserOptions: {
+    project: './tsconfig.json',
+    ...
+  },
+```
+
+If you get the missing return type, turn it off it in the rules
+
+In order for your lint to look into the src directory change the below in your package.json
+
+```
+"lint": "next lint --dir src",
+```
+
+run linting command and it should not fail
+
+test by adding
+
+```
+let c = 5;
+```
+
+it should fail and suggest using const and not let for declarations
+
+Next,
+
+#### Step 3: Eslint jest
+
+This will help us use the proper matchers i.e toBeNull over toBe(null)
+
+```
+npm i --save-dev eslint-plugin-jest
+```
+
+go to your .eslintrc and add this
+
+```
+    "plugin:jest/recommended",
+    "plugin:jest/style",
+```
+
+How to make it fail, it will tell you not to have focused test
+change it() to fit()
+
+#### More eslint benefits with react-testing-library eslint plugin
+
+add to the existing
+
+```
+  extends: [
+   ...
+    "plugin:testing-library/react",
+   ...
+  ],
+```
+
+npm install
+
+```
+npm install --save-dev eslint-plugin-testing-library
+```
+
+to test this , add a debug in the code and it will complain about debug statements
+
+```
+screen.debug();
+```
+
+#### Adding commit hooks
+
+Everytime we commit , it will run lint fixes and prettier for us
+
+```
+npx mrm@2 lint-staged
+```
+
+then
+
+```
+ npm install lint-staged prettier --save-dev
+```
+
+in your .husky directory you will find a pre-commit file, update it as follows
+
+change this
+
+```
+npx lint-staged
+```
+
+to
+
+```
+npm run lint-staged
+```
+
+Add the lint staged script to the package.json
+
+```
+ "lint-staged": "lint-staged"
+```
+
+at the bottom of the package json, update the lint-staged object
+
+```
+  "lint-staged": {
+    "*.(tsx|ts)": "eslint --cache --fix",
+    "*": "prettier --write --ignore-unknown"
+  }
+```
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
