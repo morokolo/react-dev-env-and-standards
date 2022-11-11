@@ -262,6 +262,63 @@ at the bottom of the package json, update the lint-staged object
   }
 ```
 
+At this point when you commit your code, lint and prettier will run
+
+## Github Hooks
+
+Push your code
+
+Go to github
+
+go to Actions and create a Nodejs workflow
+
+rename yourworkflow: github.yml
+
+set all branches to run this
+
+```
+    pull_request:
+    branches: [ "*" ]
+```
+
+change runs-on: ubuntu-latest to
+
+```
+ runs-on: ${{matrix.os}}
+```
+
+define the os matrix just below the node-version matrix as below
+
+```
+os: [ubuntu-lates, windows-latest, macos-latest]
+```
+
+update the commands that we will be running to this, add the build stage if necessary
+
+```
+    - run: npm ci
+    - run: npm run lint
+    - run: npm test:ci
+```
+
+## Add Jest code coverage threshold
+
+in your jest.config.js, add the following
+
+```
+coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: -10,
+    },
+  },
+
+```
+
+NB: do a gitpull so you can get your github actions
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
