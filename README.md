@@ -298,7 +298,7 @@ update the commands that we will be running to this, add the build stage if nece
 ```
     - run: npm ci
     - run: npm run lint
-    - run: npm test:ci
+    - run: npm run test:ci
 ```
 
 ## Add Jest code coverage threshold
@@ -311,13 +311,17 @@ coverageThreshold: {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: -10,
+      statements: 80,
     },
   },
 
 ```
 
 NB: do a gitpull so you can get your github actions
+
+add the test:ci script
+
+## Bootsrapping
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
